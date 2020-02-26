@@ -1,6 +1,11 @@
 #!/bin/bash -xe
 #
 
+sudo apt-get install build-essential libssl-dev libz-dev libsqlite3-dev \
+    libcurl4-gnutls-dev libdaemon-dev automake autoconf pkg-confg libtool libcppunit-dev \
+    libnl-3-dev libnl-cli-3-dev libnl-genl-3-dev libnl-nf-3-dev libnl-route-3-dev libarchive-dev \
+    libarchive-dev
+
 cd ..
 DESTDIR="$(pwd)/linux-inst"
 
@@ -64,3 +69,6 @@ for BINARY in ${BINARIES}; do
     strip ${DESTDIR}/${BINARY}
 done
 fi
+
+echo "export LD_LIBRARY_PATH=/usr/local:/usr/local" >> ~/.bashrc
+export LD_LIBRARY_PATH=/usr/local/:/usr/local
