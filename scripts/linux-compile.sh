@@ -1,6 +1,7 @@
 #!/bin/bash -xe
 #
 
+cd ..
 DESTDIR="$(pwd)/linux-inst"
 
 # set defaults
@@ -22,6 +23,8 @@ fi
 
 # clean destdir
 rm -rf ${DESTDIR}
+mkdir linux-inst
+chown -R $USER:$GROUPS linux-inst
 
 cd ibrcommon
 if [ ${CLEAN} -eq 1 ]; then
@@ -47,7 +50,7 @@ cd daemon
 if [ ${CLEAN} -eq 1 ]; then
     [ -f Makefile ] && make clean
     bash autogen.sh
-    ./configure --prefix=${DESTDIR} --with-curl --with-lowpan --with-sqlite --with-dtnsec --with-compression --with-tls --with-cppunit 
+    ./configure --prefix=${DESTDIR} --with-curl --with-lowpan --with-sqlite --with-dtnsec --with-compression --with-tls --with-cppunit --without-vmime
 fi
 make -j
 make install
@@ -61,4 +64,3 @@ for BINARY in ${BINARIES}; do
     strip ${DESTDIR}/${BINARY}
 done
 fi
-
